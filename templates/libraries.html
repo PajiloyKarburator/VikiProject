@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Библиотеки и фреймворки</h1>
+    <p>Популярные инструменты экосистем разных языков</p>
+</section>
+
+<section class="card-grid">
+    {% for lib in libraries %}
+    <a href="/library/{{ lib.id }}" class="card">
+        <div class="card-img-wrapper">
+            <div class="card-img-placeholder lib-placeholder">
+                {{ lib.name[0] }}
+            </div>
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">{{ lib.name }}</h3>
+            <p class="card-subtitle">{{ lib.language }} · {{ lib.year }}</p>
+            <div class="card-meta">
+                <span class="lib-category">{{ lib.category }}</span>
+            </div>
+        </div>
+    </a>
+    {% else %}
+    <p class="no-results">Библиотеки не найдены.</p>
+    {% endfor %}
+</section>
+{% endblock %}

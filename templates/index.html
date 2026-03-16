@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="banner">
+    <h1>Добро пожаловать в Programming Wiki</h1>
+    <p>Энциклопедия языков программирования. Узнайте историю, особенности и экосистему каждого языка.</p>
+</section>
+
+<!-- Быстрые ссылки -->
+<section class="quick-links">
+    <a href="/languages" class="quick-card">
+        <h3>Языки</h3>
+        <p>Просмотреть все языки программирования</p>
+    </a>
+    <a href="/libraries" class="quick-card">
+        <h3>Библиотеки</h3>
+        <p>Фреймворки и библиотеки</p>
+    </a>
+</section>
+
+<!-- Избранные языки -->
+<section class="featured-section">
+    <h2>Популярные языки</h2>
+    <div class="card-grid">
+        {% for lang in languages %}
+        <a href="/language/{{ lang.id }}" class="card">
+            <div class="card-img-wrapper">
+                <div class="card-img-placeholder typing-{{ 'dynamic' if lang.typing == 'Динамическая' else 'static' }}">
+                    {{ lang.name[0] }}
+                </div>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">{{ lang.name }}</h3>
+                <p class="card-subtitle">{{ lang.year }} · {{ lang.creator }}</p>
+                <div class="card-meta">
+                    <span class="typing-badge typing-{{ 'dynamic' if lang.typing == 'Динамическая' else 'static' }}">
+                        {{ lang.typing }}
+                    </span>
+                    <span class="level-label">{{ lang.level }}</span>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

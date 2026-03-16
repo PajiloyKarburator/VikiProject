@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<nav class="breadcrumb">
+    <a href="/">Главная</a> →
+    <a href="/libraries">Библиотеки</a> →
+    <span>{{ lib.name }}</span>
+</nav>
+
+<article class="lib-detail">
+    <header class="lib-header">
+        <div class="lib-avatar">
+            {{ lib.name[0] }}
+        </div>
+        <div class="lib-header-info">
+            <h1>{{ lib.name }}</h1>
+            <p class="lib-subtitle">
+                <a href="/language/{{ lib.language_id }}">{{ lib.language }}</a> · {{ lib.year }}
+            </p>
+            <div class="lib-tags">           
+                <span class="lib-language-badge">
+                    <a href="/language/{{ lib.language_id }}" style="color: inherit;">{{ lib.language }}</a>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <section class="detail-section">
+        <h2>Описание</h2>
+        <p>{{ lib.description }}</p>
+    </section>
+
+    <section class="detail-section">
+        <h2>Интересный факт</h2>
+        <p class="history-text">{{ lib.lore }}</p>
+    </section>
+
+    {% if lib.stats %}
+    <section class="detail-section">
+        <h2>Информация</h2>
+        <div class="stats-grid">
+            {% for stat_name, stat_value in lib.stats.items() %}
+            <div class="stat-card">
+                <span class="stat-value">{{ stat_value }}</span>
+                <span class="stat-label">{{ stat_name | capitalize }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    {% if lib.active %}
+    <section class="detail-section">
+        <h2>Главная фишка</h2>
+        <div class="feature-card">
+            <div class="feature-header">
+                <h3>{{ lib.active.name }}</h3>
+            </div>
+            <p>{{ lib.active.description }}</p>
+        </div>
+    </section>
+    {% endif %}
+
+    {% if lib.website %}
+    <section class="detail-section">
+        <h2>Ссылки</h2>
+        <p><a href="{{ lib.website }}" target="_blank">Официальный сайт {{ lib.name }} ↗</a></p>
+    </section>
+    {% endif %}
+</article>
+
+<div class="back-link">
+    <a href="/libraries">← Вернуться к списку библиотек</a>
+</div>
+{% endblock %}

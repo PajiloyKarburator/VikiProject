@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Языки программирования</h1>
+    <p>Все языки с историей, особенностями и примерами кода</p>
+</section>
+
+<!-- Фильтры по типам -->
+<section class="filters">
+    <a href="/languages"
+       class="filter-btn {% if not current_typing %}active{% endif %}">
+       Все
+    </a>
+    <a href="/languages?typing=Динамическая"
+       class="filter-btn typing-dynamic {% if current_typing == 'Динамическая' %}active{% endif %}">
+       Динамическая типизация
+    </a>
+    <a href="/languages?typing=Статическая"
+       class="filter-btn typing-static {% if current_typing == 'Статическая' %}active{% endif %}">
+       Статическая типизация
+    </a>
+</section>
+
+<!-- Сетка карточек языков -->
+<section class="card-grid">
+    {% for lang in languages %}
+    <a href="/language/{{ lang.id }}" class="card">
+        <div class="card-img-wrapper">
+            <div class="card-img-placeholder typing-{{ 'dynamic' if lang.typing == 'Динамическая' else 'static' }}">
+                {{ lang.name[0] }}
+            </div>
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">{{ lang.name }}</h3>
+            <p class="card-subtitle">{{ lang.year }} · {{ lang.creator }}</p>
+            <div class="card-meta">
+                <span class="typing-badge typing-{{ 'dynamic' if lang.typing == 'Динамическая' else 'static' }}">
+                    {{ lang.typing }}
+                </span>
+                <span class="level-label">{{ lang.level }}</span>
+            </div>
+            <div class="card-tags">
+                {% for cat in lang.categories %}
+                <span class="tag">{{ cat }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </a>
+    {% else %}
+    <p class="no-results">Языки не найдены.</p>
+    {% endfor %}
+</section>
+{% endblock %}

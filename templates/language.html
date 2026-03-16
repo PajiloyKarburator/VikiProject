@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<nav class="breadcrumb">
+    <a href="/">Главная</a> →
+    <a href="/languages">Языки</a> →
+    <span>{{ lang.name }}</span>
+</nav>
+
+<article class="lang-detail">
+    <header class="lang-header typing-bg-{{ 'dynamic' if lang.typing == 'Динамическая' else 'static' }}">
+        <div class="lang-header-content">
+            <div class="lang-avatar typing-{{ 'dynamic' if lang.typing == 'Динамическая' else 'static' }}">
+                {{ lang.name[0] }}
+            </div>
+            <div class="lang-header-info">
+                <h1>{{ lang.name }}</h1>
+                <p class="lang-subtitle">Создан в {{ lang.year }} году · {{ lang.creator }}</p>
+                <div class="lang-tags">
+                    <span class="typing-badge typing-{{ 'dynamic' if lang.typing == 'Динамическая' else 'static' }}">
+                        {{ lang.typing }}
+                    </span>
+                    <span class="info-badge">{{ lang.level }}</span>
+                    <span class="info-badge">{{ lang.difficulty }}</span>
+                    {% for cat in lang.categories %}
+                    <span class="tag">{{ cat }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="detail-section">
+        <h2>Описание</h2>
+        <p>{{ lang.description }}</p>
+    </section>
+
+    <section class="detail-section">
+        <h2>История</h2>
+        <p class="history-text">{{ lang.history }}</p>
+    </section>
+
+    <section class="detail-section">
+        <h2>Основные параметры</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-value">{{ lang.year }}</span>
+                <span class="stat-label">Год создания</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{{ creator_short }}</span>
+                <span class="stat-label">Создатель</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{{ lang.typing }}</span>
+                <span class="stat-label">Типизация</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">#{{ lang.popularity_rank }}</span>
+                <span class="stat-label">Популярность</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{{ lang.difficulty }}</span>
+                <span class="stat-label">Сложность</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="detail-section">
+        <h2>Ключевые особенности</h2>
+        <div class="features-list">
+            {% for feature in lang.features %}
+            <div class="feature-card">
+                <div class="feature-header">
+                    <h3>{{ feature.name }}</h3>
+                </div>
+                <p>{{ feature.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="detail-section">
+        <h2>Hello, World!</h2>
+        <div class="code-block">
+            <pre><code>{{ lang.code_example }}</code></pre>
+        </div>
+    </section>
+
+    {% if lang.website %}
+    <section class="detail-section">
+        <h2>Ссылки</h2>
+        <p><a href="{{ lang.website }}" target="_blank">Официальный сайт {{ lang.name }} ↗</a></p>
+    </section>
+    {% endif %}
+</article>
+
+<div class="back-link">
+    <a href="/languages">← Вернуться к списку языков</a>
+</div>
+{% endblock %}

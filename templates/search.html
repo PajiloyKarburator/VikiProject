@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Результаты поиска</h1>
+    {% if query %}
+    <p>По запросу «<strong>{{ query }}</strong>» найдено результатов: {{ results.total }}</p>
+    {% else %}
+    <p>Введите запрос для поиска</p>
+    {% endif %}
+</section>
+
+{% if results.languages %}
+<section class="search-section">
+    <h2>Языки ({{ results.languages | length }})</h2>
+    <div class="card-grid">
+        {% for lang in results.languages %}
+        <a href="/language/{{ lang.id }}" class="card">
+            <div class="card-img-wrapper">
+                <div class="card-img-placeholder typing-{{ 'dynamic' if lang.typing == 'Динамическая' else 'static' }}">
+                    {{ lang.name[0] }}
+                </div>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">{{ lang.name }}</h3>
+                <p class="card-subtitle">{{ lang.year }} · {{ lang.creator }}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% if results.libraries %}
+<section class="search-section">
+    <h2>Библиотеки ({{ results.libraries | length }})</h2>
+    <div class="card-grid">
+        {% for lib in results.libraries %}
+        <a href="/library/{{ lib.id }}" class="card">
+            <div class="card-img-wrapper">
+                <div class="card-img-placeholder lib-placeholder">
+                    {{ lib.name[0] }}
+                </div>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">{{ lib.name }}</h3>
+                <p class="card-subtitle">{{ lib.language }} · {{ lib.year }}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% if query and results.total == 0 %}
+<section class="no-results-section">
+    <div class="no-results-content">
+        <h2>Ничего не найдено</h2>
+        <p>Попробуйте изменить запрос или просмотрите разделы:</p>
+        <div class="no-results-links">
+            <a href="/languages" class="btn">Все языки</a>
+            <a href="/libraries" class="btn">Все библиотеки</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
