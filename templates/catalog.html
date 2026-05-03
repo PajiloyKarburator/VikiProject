@@ -1,0 +1,59 @@
+<!-- templates/catalog.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <h1>📚 Весь каталог</h1>
+    <p>Все языки программирования и библиотеки в одном месте</p>
+</section>
+
+<section class="card-grid">
+    {% for item in all_content %}
+
+        {% if item.content_type == "language" %}
+        <a href="/language/{{ item.id }}" class="card">
+            <div class="card-img-wrapper">
+                <div class="card-img-placeholder typing-{{ 'dynamic' if item.typing == 'Динамическая' else 'static' }}">
+                    {{ item.name[0] }}
+                </div>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">{{ item.name }}</h3>
+                <p class="card-subtitle">{{ item.year }} · {{ item.creator }}</p>
+                <div class="card-meta">
+                    <span class="content-type-badge content-type-lang">🌐 Язык</span>
+                    <span class="typing-badge typing-{{ 'dynamic' if item.typing == 'Динамическая' else 'static' }}">
+                        {{ item.typing }}
+                    </span>
+                </div>
+                <div class="card-tags">
+                    {% for cat in item.categories %}
+                    <span class="tag">{{ cat }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </a>
+
+        {% elif item.content_type == "library" %}
+        <a href="/library/{{ item.id }}" class="card">
+            <div class="card-img-wrapper">
+                <div class="card-img-placeholder lib-placeholder">
+                    {{ item.name[0] }}
+                </div>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">{{ item.name }}</h3>
+                <p class="card-subtitle">{{ item.language }} · {{ item.year }}</p>
+                <div class="card-meta">
+                    <span class="content-type-badge content-type-lib">📦 Библиотека</span>
+                    <span class="lib-category">{{ item.category }}</span>
+                </div>
+            </div>
+        </a>
+        {% endif %}
+
+    {% else %}
+    <p class="no-results">Каталог пуст.</p>
+    {% endfor %}
+</section>
+{% endblock %}

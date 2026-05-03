@@ -1,3 +1,4 @@
+<!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -12,13 +13,14 @@
     <nav class="navbar">
         <div class="container nav-container">
             <a href="/" class="logo">
-                Вики
+                💻 Programming Wiki
             </a>
 
             <ul class="nav-links">
                 <li><a href="/">Главная</a></li>
                 <li><a href="/languages">Языки</a></li>
                 <li><a href="/libraries">Библиотеки</a></li>
+                <li><a href="/add" class="nav-add-btn">＋ Добавить</a></li>
             </ul>
 
             <!-- Поиск -->
@@ -35,16 +37,24 @@
         </div>
     </nav>
 
+<ul class="nav-links">
+    <li><a href="/">Главная</a></li>
+    <li><a href="/languages">Языки</a></li>
+    <li><a href="/libraries">Библиотеки</a></li>
+    <li><a href="/catalog">Каталог</a></li>
+    <li><a href="/add" class="nav-add-btn">＋ Добавить</a></li>
+</ul>
+
     <!-- Основной контент -->
     <main class="container">
         {% block content %}
         {% endblock %}
     </main>
 
-    <!-- Футер -->
+    <!-- Подвал -->
     <footer class="footer">
         <div class="container">
-            <p>Programming Wiki — учебный проект. Пожалуйста. поставьте пятёрочку.</p>
+            <p>Programming Wiki — учебный проект. Все торговые марки принадлежат их владельцам.</p>
         </div>
     </footer>
 

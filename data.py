@@ -1,3 +1,5 @@
+# data.py
+
 languages = {
     "python": {
         "id": "python",
@@ -368,7 +370,9 @@ libraries = {
 }
 
 
+# =============================================
 # Вспомогательные функции
+# =============================================
 
 def get_all_languages():
     """Возвращает список всех языков"""
@@ -390,11 +394,95 @@ def get_library(lib_id: str):
     return libraries.get(lib_id)
 
 
+def get_all_content():
+    """
+    Возвращает единый список из языков и библиотек.
+    К каждому элементу добавляется поле 'content_type',
+    чтобы в шаблоне можно было отличить язык от библиотеки.
+    """
+    content = []
+
+    for lang in languages.values():
+        item = dict(lang)                # копируем словарь
+        item["content_type"] = "language" # помечаем тип
+        content.append(item)
+
+    for lib in libraries.values():
+        item = dict(lib)
+        item["content_type"] = "library"
+        content.append(item)
+
+    return content
+
+
+def add_language(lang_data: dict):
+    """
+    Добавляет новый язык в словарь.
+    Возвращает ID добавленного языка.
+    """
+    # Создаём ID из названия: "My Language" → "my_language"
+    lang_id = lang_data["name"].lower().replace(" ", "_").replace("+", "p").replace("#", "sharp")
+
+    languages[lang_id] = {
+        "id": lang_id,
+        "name": lang_data["name"],
+        "year": int(lang_data.get("year", 2024)),
+        "creator": lang_data.get("creator", "Неизвестен"),
+        "paradigm": lang_data.get("paradigm", "multi-paradigm"),
+        "typing": lang_data.get("typing", "Динамическая"),
+        "level": lang_data.get("level", "Высокоуровневый"),
+        "categories": [
+            cat.strip()
+            for cat in lang_data.get("categories", "Общее").split(",")
+        ],
+        "img": "",
+        "website": lang_data.get("website", ""),
+        "difficulty": lang_data.get("difficulty", "Средний"),
+        "popularity_rank": len(languages) + 1,
+        "description": lang_data.get("description", "Описание не указано."),
+        "history": lang_data.get("history", "История не указана."),
+        "features": [],
+        "code_example": lang_data.get("code_example", "// Hello, World!"),
+    }
+
+    return lang_id
+
+
+def add_library(lib_data: dict):
+    """
+    Добавляет новую библиотеку в словарь.
+    Возвращает ID добавленной библиотеки.
+    """
+    lib_id = lib_data["name"].lower().replace(" ", "_").replace(".", "")
+
+    # Определяем language_id по названию языка
+    language_name = lib_data.get("language", "")
+    language_id = ""
+    for lang in languages.values():
+        if lang["name"].lower() == language_name.lower():
+            language_id = lang["id"]
+            break
+
+    libraries[lib_id] = {
+        "id": lib_id,
+        "name": lib_data["name"],
+        "language": lib_data.get("language", "Не указан"),
+        "language_id": language_id,
+        "year": int(lib_data.get("year", 2024)),
+        "category": lib_data.get("category", "Библиотека"),
+        "img": "",
+        "website": lib_data.get("website", ""),
+        "description": lib_data.get("description", "Описание не указано."),
+        "lore": lib_data.get("lore", ""),
+        "stats": {},
+        "active": None,
+    }
+
+    return lib_id
+
+
 def search_all(query: str):
-    """
-    Ищет языки и библиотеки по имени.
-    Возвращает словарь с результатами.
-    """
+    """Ищет языки и библиотеки по имени."""
     query_lower = query.lower().strip()
 
     found_languages = [

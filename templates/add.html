@@ -1,0 +1,167 @@
+<!-- templates/add.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <h1>✏️ Добавить запись</h1>
+    <p>Добавьте новый язык программирования или библиотеку в энциклопедию</p>
+</section>
+
+<!-- Сообщение об успехе -->
+{% if success %}
+<div class="success-message">
+    ✅ Запись успешно добавлена!
+    {% if "language:" in success %}
+        <a href="/language/{{ success.split(':')[1] }}">Перейти к странице →</a>
+    {% elif "library:" in success %}
+        <a href="/library/{{ success.split(':')[1] }}">Перейти к странице →</a>
+    {% endif %}
+</div>
+{% endif %}
+
+<div class="forms-container">
+
+    <!-- Форма добавления языка -->
+    <section class="add-form-section">
+        <h2>🌐 Добавить язык</h2>
+
+        <form action="/add/language" method="post" class="add-form">
+
+            <div class="form-group">
+                <label for="lang-name">Название *</label>
+                <input type="text" id="lang-name" name="name"
+                       placeholder="Например: Go" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="lang-year">Год создания</label>
+                    <input type="number" id="lang-year" name="year"
+                           placeholder="2009" value="2024">
+                </div>
+
+                <div class="form-group">
+                    <label for="lang-creator">Создатель</label>
+                    <input type="text" id="lang-creator" name="creator"
+                           placeholder="Имя создателя">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="lang-typing">Типизация</label>
+                    <select id="lang-typing" name="typing">
+                        <option value="Динамическая">Динамическая</option>
+                        <option value="Статическая">Статическая</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="lang-level">Уровень</label>
+                    <select id="lang-level" name="level">
+                        <option value="Высокоуровневый">Высокоуровневый</option>
+                        <option value="Средне/Низкоуровневый">Средне/Низкоуровневый</option>
+                        <option value="Системный">Системный</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="lang-difficulty">Сложность</label>
+                    <select id="lang-difficulty" name="difficulty">
+                        <option value="Лёгкий">Лёгкий</option>
+                        <option value="Средний" selected>Средний</option>
+                        <option value="Сложный">Сложный</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lang-categories">Категории (через запятую)</label>
+                <input type="text" id="lang-categories" name="categories"
+                       placeholder="Веб, Data Science, ИИ">
+            </div>
+
+            <div class="form-group">
+                <label for="lang-website">Официальный сайт</label>
+                <input type="url" id="lang-website" name="website"
+                       placeholder="https://example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="lang-description">Описание</label>
+                <textarea id="lang-description" name="description" rows="3"
+                          placeholder="Краткое описание языка..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="lang-history">История</label>
+                <textarea id="lang-history" name="history" rows="3"
+                          placeholder="История создания языка..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="lang-code">Пример кода (Hello World)</label>
+                <textarea id="lang-code" name="code_example" rows="3"
+                          placeholder='print("Hello, World!")'></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Добавить язык</button>
+        </form>
+    </section>
+
+    <!-- Форма добавления библиотеки -->
+    <section class="add-form-section">
+        <h2>📦 Добавить библиотеку</h2>
+
+        <form action="/add/library" method="post" class="add-form">
+
+            <div class="form-group">
+                <label for="lib-name">Название *</label>
+                <input type="text" id="lib-name" name="name"
+                       placeholder="Например: FastAPI" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="lib-language">Язык</label>
+                    <input type="text" id="lib-language" name="language"
+                           placeholder="Python">
+                </div>
+
+                <div class="form-group">
+                    <label for="lib-year">Год создания</label>
+                    <input type="number" id="lib-year" name="year"
+                           placeholder="2018" value="2024">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lib-category">Категория</label>
+                <input type="text" id="lib-category" name="category"
+                       placeholder="Веб-фреймворк">
+            </div>
+
+            <div class="form-group">
+                <label for="lib-website">Официальный сайт</label>
+                <input type="url" id="lib-website" name="website"
+                       placeholder="https://example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="lib-description">Описание</label>
+                <textarea id="lib-description" name="description" rows="3"
+                          placeholder="Описание библиотеки..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="lib-lore">Интересный факт</label>
+                <textarea id="lib-lore" name="lore" rows="2"
+                          placeholder="Любопытный факт о библиотеке..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Добавить библиотеку</button>
+        </form>
+    </section>
+
+</div>
+{% endblock %}
