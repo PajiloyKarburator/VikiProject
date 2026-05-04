@@ -1,0 +1,62 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} — Programming Wiki</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="/" class="logo">
+                💻 Programming Wiki
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/languages">Языки</a></li>
+                <li><a href="/libraries">Библиотеки</a></li>
+                <li><a href="/add" class="nav-add-btn">＋ Добавить</a></li>
+            </ul>
+
+            <!-- Поиск -->
+            <form class="search-form" action="/search" method="get">
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Поиск языков и библиотек..."
+                    class="search-input"
+                    value="{{ query if query else '' }}"
+                >
+                <button type="submit" class="search-btn">🔍</button>
+            </form>
+        </div>
+    </nav>
+
+<ul class="nav-links">
+    <li><a href="/">Главная</a></li>
+    <li><a href="/languages">Языки</a></li>
+    <li><a href="/libraries">Библиотеки</a></li>
+    <li><a href="/catalog">Каталог</a></li>
+    <li><a href="/add" class="nav-add-btn">＋ Добавить</a></li>
+</ul>
+
+    <!-- Основной контент -->
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="container">
+            <p>Programming Wiki — учебный проект. Все торговые марки принадлежат их владельцам.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
