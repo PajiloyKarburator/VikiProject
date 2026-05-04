@@ -1,3 +1,4 @@
+<!-- templates/library.html -->
 {% extends "base.html" %}
 
 {% block content %}
@@ -15,29 +16,41 @@
         <div class="lib-header-info">
             <h1>{{ lib.name }}</h1>
             <p class="lib-subtitle">
-                <a href="/language/{{ lib.language_id }}">{{ lib.language }}</a> · {{ lib.year }}
+                {% if lib.language_id %}
+                    <a href="/language/{{ lib.language_id }}">{{ lib.language }}</a>
+                {% else %}
+                    {{ lib.language }}
+                {% endif %}
+                · {{ lib.year }}
             </p>
-            <div class="lib-tags">           
+            <div class="lib-tags">
+                <span class="lib-category-badge">📦 {{ lib.category }}</span>
+                {% if lib.language_id %}
                 <span class="lib-language-badge">
                     <a href="/language/{{ lib.language_id }}" style="color: inherit;">{{ lib.language }}</a>
                 </span>
+                {% else %}
+                <span class="lib-language-badge">{{ lib.language }}</span>
+                {% endif %}
             </div>
         </div>
     </header>
 
     <section class="detail-section">
-        <h2>Описание</h2>
+        <h2>📖 Описание</h2>
         <p>{{ lib.description }}</p>
     </section>
 
+    {% if lib.lore %}
     <section class="detail-section">
-        <h2>Интересный факт</h2>
+        <h2>📜 Интересный факт</h2>
         <p class="history-text">{{ lib.lore }}</p>
     </section>
+    {% endif %}
 
     {% if lib.stats %}
     <section class="detail-section">
-        <h2>Информация</h2>
+        <h2>📊 Информация</h2>
         <div class="stats-grid">
             {% for stat_name, stat_value in lib.stats.items() %}
             <div class="stat-card">
@@ -51,7 +64,7 @@
 
     {% if lib.active %}
     <section class="detail-section">
-        <h2>Главная фишка</h2>
+        <h2>✨ Главная фишка</h2>
         <div class="feature-card">
             <div class="feature-header">
                 <h3>{{ lib.active.name }}</h3>
@@ -63,7 +76,7 @@
 
     {% if lib.website %}
     <section class="detail-section">
-        <h2>Ссылки</h2>
+        <h2>🔗 Ссылки</h2>
         <p><a href="{{ lib.website }}" target="_blank">Официальный сайт {{ lib.name }} ↗</a></p>
     </section>
     {% endif %}

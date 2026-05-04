@@ -19,6 +19,24 @@
 </div>
 {% endif %}
 
+<!-- Сообщение об ошибке -->
+{% if error %}
+<div class="error-message">
+    ⚠️ Ошибка при добавлении!
+    {% if "duplicate_language:" in error %}
+        Язык с таким названием уже существует.
+        <a href="/language/{{ error.split(':')[1] }}">Перейти к существующему →</a>
+    {% elif "duplicate_library:" in error %}
+        Библиотека с таким названием уже существует.
+        <a href="/library/{{ error.split(':')[1] }}">Перейти к существующей →</a>
+    {% elif error == "invalid_year" %}
+        Год должен быть числом от 1950 до 2030.
+    {% else %}
+        Неизвестная ошибка. Попробуйте снова.
+    {% endif %}
+</div>
+{% endif %}
+
 <div class="forms-container">
 
     <!-- Форма добавления языка -->
@@ -30,20 +48,21 @@
             <div class="form-group">
                 <label for="lang-name">Название *</label>
                 <input type="text" id="lang-name" name="name"
-                       placeholder="Например: Go" required>
+                       placeholder="Например: Go" required maxlength="100">
+                <span class="form-hint">Максимум 100 символов</span>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="lang-year">Год создания</label>
                     <input type="number" id="lang-year" name="year"
-                           placeholder="2009" value="2024">
+                           placeholder="2009" value="2024" min="1950" max="2030">
                 </div>
 
                 <div class="form-group">
                     <label for="lang-creator">Создатель</label>
                     <input type="text" id="lang-creator" name="creator"
-                           placeholder="Имя создателя">
+                           placeholder="Имя создателя" maxlength="200">
                 </div>
             </div>
 
@@ -78,7 +97,7 @@
             <div class="form-group">
                 <label for="lang-categories">Категории (через запятую)</label>
                 <input type="text" id="lang-categories" name="categories"
-                       placeholder="Веб, Data Science, ИИ">
+                       placeholder="Веб, Data Science, ИИ" maxlength="200">
             </div>
 
             <div class="form-group">
@@ -90,19 +109,21 @@
             <div class="form-group">
                 <label for="lang-description">Описание</label>
                 <textarea id="lang-description" name="description" rows="3"
-                          placeholder="Краткое описание языка..."></textarea>
+                          placeholder="Краткое описание языка..." maxlength="1000"></textarea>
+                <span class="form-hint">Максимум 1000 символов</span>
             </div>
 
             <div class="form-group">
                 <label for="lang-history">История</label>
                 <textarea id="lang-history" name="history" rows="3"
-                          placeholder="История создания языка..."></textarea>
+                          placeholder="История создания языка..." maxlength="1000"></textarea>
+                <span class="form-hint">Максимум 1000 символов</span>
             </div>
 
             <div class="form-group">
                 <label for="lang-code">Пример кода (Hello World)</label>
                 <textarea id="lang-code" name="code_example" rows="3"
-                          placeholder='print("Hello, World!")'></textarea>
+                          placeholder='print("Hello, World!")' maxlength="500"></textarea>
             </div>
 
             <button type="submit" class="submit-btn">Добавить язык</button>
@@ -118,27 +139,28 @@
             <div class="form-group">
                 <label for="lib-name">Название *</label>
                 <input type="text" id="lib-name" name="name"
-                       placeholder="Например: FastAPI" required>
+                       placeholder="Например: FastAPI" required maxlength="100">
+                <span class="form-hint">Максимум 100 символов</span>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="lib-language">Язык</label>
                     <input type="text" id="lib-language" name="language"
-                           placeholder="Python">
+                           placeholder="Python" maxlength="50">
                 </div>
 
                 <div class="form-group">
                     <label for="lib-year">Год создания</label>
                     <input type="number" id="lib-year" name="year"
-                           placeholder="2018" value="2024">
+                           placeholder="2018" value="2024" min="1950" max="2030">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="lib-category">Категория</label>
                 <input type="text" id="lib-category" name="category"
-                       placeholder="Веб-фреймворк">
+                       placeholder="Веб-фреймворк" maxlength="100">
             </div>
 
             <div class="form-group">
@@ -150,13 +172,14 @@
             <div class="form-group">
                 <label for="lib-description">Описание</label>
                 <textarea id="lib-description" name="description" rows="3"
-                          placeholder="Описание библиотеки..."></textarea>
+                          placeholder="Описание библиотеки..." maxlength="1000"></textarea>
+                <span class="form-hint">Максимум 1000 символов</span>
             </div>
 
             <div class="form-group">
                 <label for="lib-lore">Интересный факт</label>
                 <textarea id="lib-lore" name="lore" rows="2"
-                          placeholder="Любопытный факт о библиотеке..."></textarea>
+                          placeholder="Любопытный факт о библиотеке..." maxlength="500"></textarea>
             </div>
 
             <button type="submit" class="submit-btn">Добавить библиотеку</button>

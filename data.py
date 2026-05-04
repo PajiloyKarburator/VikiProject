@@ -418,10 +418,13 @@ def get_all_content():
 def add_language(lang_data: dict):
     """
     Добавляет новый язык в словарь.
-    Возвращает ID добавленного языка.
+    Возвращает кортеж (lang_id, is_duplicate).
     """
-    # Создаём ID из названия: "My Language" → "my_language"
-    lang_id = lang_data["name"].lower().replace(" ", "_").replace("+", "p").replace("#", "sharp")
+    lang_id = lang_data["name"].lower().replace(" ", "_").replace("+", "plus").replace("#", "sharp")
+
+    # Проверка на дубликат
+    if lang_id in languages:
+        return (lang_id, True)  # Дубликат найден
 
     languages[lang_id] = {
         "id": lang_id,
@@ -445,15 +448,19 @@ def add_language(lang_data: dict):
         "code_example": lang_data.get("code_example", "// Hello, World!"),
     }
 
-    return lang_id
+    return (lang_id, False)
 
 
 def add_library(lib_data: dict):
     """
     Добавляет новую библиотеку в словарь.
-    Возвращает ID добавленной библиотеки.
+    Возвращает кортеж (lib_id, is_duplicate).
     """
     lib_id = lib_data["name"].lower().replace(" ", "_").replace(".", "")
+
+    # Проверка на дубликат
+    if lib_id in libraries:
+        return (lib_id, True)
 
     # Определяем language_id по названию языка
     language_name = lib_data.get("language", "")
@@ -478,23 +485,42 @@ def add_library(lib_data: dict):
         "active": None,
     }
 
-    return lib_id
+    return (lib_id, False)
 
 
 def search_all(query: str):
     """Ищет языки и библиотеки по имени."""
     query_lower = query.lower().strip()
+    
+    # Специальная обработка для C++
+    query_variations = [query_lower]
+    if "c++" in query_lower or "c  " in query_lower:
+        query_variations.append("c++")
+        query_variations.append("cpp")
 
-    found_languages = [
-        lang for lang in languages.values()
-        if query_lower in lang["name"].lower()
-    ]
+    found_languages = []
+    for lang in languages.values():
+        name_lower = lang["name"].lower()
+        id_lower = lang["id"].lower()
+        
+        # Проверяем все вариации запроса
+        for variant in query_variations:
+            if variant in name_lower or variant in id_lower:
+                if lang not in found_languages:
+                    found_languages.append(lang)
+                break
 
-    found_libraries = [
-        lib for lib in libraries.values()
-        if query_lower in lib["name"].lower()
-        or query_lower in lib["language"].lower()
-    ]
+    found_libraries = []
+    for lib in libraries.values():
+        name_lower = lib["name"].lower()
+        lang_lower = lib["language"].lower()
+        id_lower = lib["id"].lower()
+        
+        for variant in query_variations:
+            if variant in name_lower or variant in lang_lower or variant in id_lower:
+                if lib not in found_libraries:
+                    found_libraries.append(lib)
+                break
 
     return {
         "languages": found_languages,

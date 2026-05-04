@@ -7,6 +7,22 @@
     <p>Все языки программирования и библиотеки в одном месте</p>
 </section>
 
+<!-- Фильтры -->
+<section class="filters">
+    <a href="/catalog"
+       class="filter-btn {% if not current_filter %}active{% endif %}">
+       Всё
+    </a>
+    <a href="/catalog?type=languages"
+       class="filter-btn {% if current_filter == 'languages' %}active{% endif %}">
+       🌐 Только языки
+    </a>
+    <a href="/catalog?type=libraries"
+       class="filter-btn {% if current_filter == 'libraries' %}active{% endif %}">
+       📦 Только библиотеки
+    </a>
+</section>
+
 <section class="card-grid">
     {% for item in all_content %}
 

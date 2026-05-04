@@ -926,6 +926,98 @@ a:hover {
 }
 
 /* ==========================================
+   СООБЩЕНИЕ ОБ ОШИБКЕ
+   ========================================== */
+
+.error-message {
+    background: rgba(229, 62, 62, 0.15);
+    border: 1px solid #e53e3e;
+    border-radius: 10px;
+    padding: 15px 25px;
+    margin-bottom: 25px;
+    color: #fc8181;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.error-message a {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.form-hint {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+/* Ограничение длины на карточках */
+.card-title {
+    color: var(--text-heading);
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ==========================================
+   СТРАНИЦА 404
+   ========================================== */
+
+.error-page {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.error-content {
+    max-width: 600px;
+}
+
+.error-code {
+    font-size: 8rem;
+    font-weight: bold;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.error-page h1 {
+    font-size: 2rem;
+    color: var(--text-heading);
+    margin-bottom: 15px;
+}
+
+.error-page p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.error-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-secondary {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+}
+
+/* ==========================================
    АДАПТИВНОСТЬ
    ========================================== */
 
